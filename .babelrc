@@ -1,0 +1,18 @@
+{
+    "plugins": [
+
+        "babel-plugin-add-module-exports", [
+            "transform-react-jsx",
+            {
+                "pragma": "h"
+            }
+        ],
+        [
+            "transform-object-rest-spread"
+        ]
+    ],
+    "presets": [
+        ["es2015", { "modules": false }],
+        "stage-0"
+    ]
+}

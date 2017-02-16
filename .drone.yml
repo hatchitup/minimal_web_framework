@@ -1,0 +1,34 @@
+name: embed
+
+branches:
+  - master
+
+build:
+  image: node:6.0
+  commands:
+    - npm install -g gulp
+    - npm install
+
+
+notify:
+ slack:
+   webhook_url: https://hooks.slack.com/services/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
+   channel: api
+   username: askparrot
+   template: >
+     {{#success build.status}}
+       {{ build.author }} successfully pushed to {{ build.branch}}. Code was published.
+     {{else}}
+       {{ build.author }} broke the build. Code was not published. 
+       <{{system.link_url}}/{{repo.full_name}}/{{build.number}}|{{repo.name}}#{{build.commit}}>
+     {{/success}}
+
+
+deploy: 
+  ssh:
+    host: 139.59.2.160
+    user: root
+    commands:
+      - cd /var/www/embed.askparrot.com
+      - git pull origin master
+      - service nginx restart
